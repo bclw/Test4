@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysd.dao.UserMapper">
+<select id="selectUserByname" parameterType="User" resultType="User">
+		SELECT uId,loginName,`password`,padWrongTime,lockTime,lastLoginTime,isLockOut
+		FROM `user`
+		<where>
+			loginName=#{loginName}
+		</where>
+	</select>
+	<update id="updateUserLoginInfo" parameterType="User">
+		update `user`
+		<set>
+			<if test="padWrongTime !=null and padWrongTime !='' ">
+				padWrongTime=#{padWrongTime},
+			</if>
+			<if test="isLockOut !=null and isLockOut !=''">
+				isLockOut=#{isLockOut},
+			</if>
+			<if test="lastLoginTime !=null and lastLoginTime !=''">
+				lastLoginTime=#{lastLoginTime},
+			</if>
+			<if test="lockTime !=null and lockTime !=''">
+				lockTime=#{lockTime},
+			</if>
+		</set>
+		<where>
+			uId=#{uId}
+		</where>
+	</update>
+
+
+</mapper>

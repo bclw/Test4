@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript" href="../js/global.js"></script>
+<script>
+			var token = "e79fd7ae-15aa-477e-8c81-e5b70ac5a782";
+
+			function searchUserInfo() {
+				$("#dg").datagrid({
+					url: 'http://stuapi.ysd3g.com/api/GetUsers', //数据接口的地址
+					queryParams: { //要发送的参数列表
+						token: token,
+						orderBy: '',
+						userName: '',
+						beginDate: '',
+						endDate: '',
+						isLock: ''
+					}
+				});
+
+			}
+			$(function() {
+				searchUserInfo();
+			});
+
+			function addInfo() {
+				$("#adduser_window").window("open");
+			}
+
+			function formatterCasozuo(value, row, index) {
+				return '<a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="edit(' + index + ')">编辑&nbsp;&nbsp;&nbsp;</a><a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="del(' + index + ')">删除</a>'
+			}
+
+			function edit(index) {
+				var data = $("#dg").datagrid("getData");
+				var row = data.rows[index];
+				$("#updatauserForm").form("load", row)
+					//updateuser_window
+				$("#updateuser_window").window("open");
+			}
+			
+			/*格式化函数*/
+			function formatterRole(value,row,index){
+				return "<a href='javascript:void(0)' onclick='setUserRole("+index+")'>设置</a>"
+			}
+			
+			function setUserRole(index){
+				//获取用户信息
+				var row=$("#dg").datagrid("getSelected");
+				//获取所有的角色信息
+				$("#allrole").datagrid({
+					url:globalData.server2+"/api/GetRolesAll",
+					queryParams:{
+						token:globalData.myToken
+					}
+				})
+				//获取当前选中的的用户角色的信息
+				$("#myrole").datagrid({
+					url:globalData.server2+"/api/GetRoleByUserId",
+					queryParams:{
+						token:globalData.myToken,
+						uId:row.Id
+					}
+				})
+				//打开弹窗
+				$("#setRole_window").window("setTitle","设置"+row.LoginName+"角色信息")
+				$("#setRole_window").window("open");
+			}
+			
+			/*新增用户角色*/
+			function addUserRole(){
+				//获取用户信息
+				var userRow=$("#dg").datagrid("getSelected");
+				//获取角色id
+				var roleRow=$("#allrole").datagrid("getSelected");
+				if(roleRow){
+					$.post(globalData.server2+"/api/AddUserToRole",{
+						uId:userRow.Id,
+						rId:roleRow.Id,
+						token:globalData.myToken
+					},function(res){
+						if(res.success){
+							$("#myrole").datagrid("reload");
+						}else{
+							$.messager.alert("提示","角色设置失败")
+						}
+					},"json")
+				}else{
+					$.messager.alert("提示","请先选择角色！！")
+				}
+			}
+			/*删除用户角色*/
+			function deleteUserRole(){
+				//获取用户信息（点）
+				var userRow=$("#dg").datagrid("getSelected");
+				//获取角色id
+				var roleRow=$("#myrole").datagrid("getSelected");
+				if(roleRow){
+					$.post(globalData.server2+"/api/RemoveUserFromRole",{
+						uId:userRow.Id,
+						rId:roleRow.Id,
+						token:globalData.myToken
+					},function(res){
+						if(res.success){
+							$("#myrole").datagrid("reload");
+						}else{
+							$.messager.alert("提示","角色设置失败")
+						}
+					},"json")
+				}else{
+					$.messager.alert("提示","请先选择角色！！")
+				}
+			}
+			
+			
+		</script>
+
+
+
+
+<body>
+	
+		<table name="center" class="easyui-datagrid" id="dg" title="用户列表" data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',toolbar:'#usertb',pageSize:10,fitColumns:true">
+			<thead>
+				<tr>
+					<th data-options="field:'Id',width:280,hidden:true">用户ID</th>
+					<th data-options="field:'LoginName',width:100">用户名</th>
+					<th data-options="field:'ProtectEMail',width:100">邮箱</th>
+					<th data-options="field:'ProtectMTel',width:100,">手机号</th>
+					<th data-options="field:'IsLockout',width:100,">是否锁定</th>
+					<th data-options="field:'CreateTime',width:160,">创建时间</th>
+					<th data-options="field:'LastLoginTime',width:160,">最后登录的时间</th>
+					<th data-options="field:'setdao',width:100,formatter:formatterCasozuo">操作</th>
+					<th data-options="field:'setrole',width:100,formatter:formatterRole">角色</th>
+				</tr>
+			</thead>
+		</table>
+
+		<div id="usertb" style="padding:5px; height:auto">
+			<div style="margin-bottom:5px">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addInfo()">新增</a>&nbsp;&nbsp;&nbsp;&nbsp; 名称: <input class="easyui-textbox" id="userName" style="width:80px">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchUserInfo()">查找</a>
+			</div>
+		</div>
+		<!--新增的窗口-->
+		<div id="adduser_window" class="easyui-window" title="新增员工信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:300px;padding:10px;">
+			<center>
+				<form id="adduserForm">
+					<table cellpadding="5">
+						<tr>
+							<td>用户名:</td>
+							<td><input class="easyui-textbox" type="text" name="name" id="ename" data-options=""></input>
+							</td>
+						</tr>
+						<tr>
+							<td>密码:</td>
+							<td><input class="easyui-textbox" type="password" id="pwd" name="pwd" data-options=""></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td><input class="easyui-textbox" type="text" name="email" id="email" data-options=""></input>
+							</td>
+						</tr>
+
+						<tr>
+							<td>手机号:</td>
+							<td><input type="text" class="easyui-numberbox" id="mtel" name="mtel" data-options=""></td>
+						</tr>
+					</table>
+				</form>
+				<div style="text-align:center;padding:5px">
+					<a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="submitUserForm()">保存</a>
+					<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearUserForm()">取消</a>
+				</div>
+
+				</form>
+
+			</center>
+
+			<div id="updateuser_window" class="easyui-window" title="新增员工信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:300px;padding:10px;">
+				<!--修改表单-->
+				<form id="updatauserForm">
+					<table cellpadding="5">
+						<tr>
+							<td>用户名:</td>
+							<td><input class="easyui-textbox" type="text" name="LoginName" id="LoginName" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>创建时间:</td>
+							<td><input class="easyui-textbox" type="text" id="CreateTime" name="CreateTime" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td><input class="easyui-textbox" type="text" name="ProtectEMail" id="ProtectEMail" data-options="required:true,validType:'email'"></input>
+							</td>
+						</tr>
+
+						<tr>
+							<td>最后登录时间:</td>
+							<td><input type="text" class="text" id="LastLoginTime" name="LastLoginTime" data-options="required:true"></td>
+						</tr>
+					</table>
+					<div style="text-align:center;padding:5px">
+						<a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="updateUserForm()">修改</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearUserForm()">取消</a>
+					</div>
+			</div>
+		</div> 
+		
+		<!--角色设置窗口-->
+		<div id="setRole_window" class="easyui-window"  data-options="modal:true,closed:true" style="width:500px;height:600px;padding:10px;">
+			<table>
+				<tr>
+					<td width="200px">
+						<!--展示所有的角色-->
+						<table title="所有的角色" id="allrole" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:true,method:'post',fitColumns:true">
+							<thead>
+								<tr>
+									<th data-options="field:'Id',width:280,hidden:true">用户ID</th>
+									<th data-options="field:'Name',width:100">用户名</th>
+								</tr>
+							</thead>
+						</table>
+					</td>
+					<td width="100px">
+						<input type="button" value=">>" onclick="addUserRole()" />
+						<input type="button" value="<<" onclick="deleteUserRole()" />
+					</td>
+					<td width="200px" valign="top">
+						<!--展示当前用户的角色-->
+						<table title="用户的角色" id="myrole" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:true,method:'post',fitColumns:true">
+							<thead>
+								<tr>
+									<th data-options="field:'Id',width:280,hidden:true">用户ID</th>
+									<th data-options="field:'Name',width:100">用户名</th>
+								</tr>
+							</thead>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+</body>
+</html>

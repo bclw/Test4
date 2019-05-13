@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cxm.dao.StudentMapper">
+<select id="selectStuCount" parameterType="fenye"  resultType="int">
+		select count(sId) from student s,classes c
+		<where>
+			<if test="student.sId != null and student.sId !=''">
+				and sId=#{student.sId}
+			</if>
+			<if test="student.sName != null and student.sName !=''">
+				and sName=#{student.sName }
+			</if>
+			<if test="student.sSex != null and student.sSex !=''">
+				and sSex=#{student.sSex}
+			</if>
+			<if test="student.sBirthday != null and student.sBirthday !=''">
+				and sBirthday=#{student.sBirthday}
+			</if>
+			<if test="student.classes.classId != null and student.classes.classId !=''">
+				and c.classId=#{student.classes.classId}
+			</if>
+				and s.classId = c.classId
+		</where>
+	</select>
+	
+	
+	<resultMap type="student" id="studentclasses">
+		<id column="sId" property="sId"/>
+		<result column="sName" property="sName"/>
+		<result column="sSex" property="sSex"/>
+		<result column="sBirthday" property="sBirthday"/>
+		<result column="classId" property="classes.classId"/>
+		<result column="className" property="classes.className"/>
+	
+	</resultMap>
+
+	<select id="selectStu" parameterType="fenye"  resultMap="studentclasses">
+		select s.sId,s.sName,s.sSex,s.sBirthday,c.classId,c.className from student s,classes c
+		<where>
+			<if test="student.sId != null and student.sId !=''">
+				and s.sId=#{student.sId}
+			</if>
+			<if test="student.sName != null and student.sName !=''">
+				and s.sName=#{student.sName }
+			</if>
+			<if test="student.sSex != null and student.sSex !=''">
+				and s.sSex=#{student.sSex}
+			</if>
+			<if test="student.sBirthday != null and student.sBirthday !=''">
+				and s.sBirthday=#{student.sBirthday}
+			</if>
+			<if test="student.classes.classId != null and student.classes.classId !=''">
+				and c.classId=#{student.classes.classId}
+			</if>
+			and s.classId = c.classId
+		</where>
+		limit #{page},#{pageSize};
+	</select>
+	
+	
+	<update id="updateStu" parameterType="student">
+		update student 
+		<set>
+			<if test="sName != null and sName !=''">
+				 sName=#{sName },
+			</if>
+			<if test="sSex != null and sSex !=''">
+				 sSex=#{sSex},
+			</if>
+			<if test="sBirthday != null and sBirthday !=''">
+				 sBirthday=#{sBirthday},
+			</if>
+			<if test="classes.classId != null and classes.classId !=''">
+				classId=#{classes.classId},
+			</if>
+		</set>
+		<where>
+			<if test="sId != null and sId !=''">
+					sId=#{sId}
+			</if>
+		</where>
+	</update>
+	
+	<delete id="deleteStu" parameterType="int">
+		delete from student where sId=#{sId}
+	</delete>
+	
+	<insert id="insertStu" parameterType="student">
+	    insert into student(sName,sSex,sBirthday,classId) values(#{sName},#{sSex},#{sBirthday},#{classes.classId})
+	</insert>
+	
+	<select id="getClasses" resultType="classes">
+		select classId,className from classes
+	</select>
+	
+</mapper>

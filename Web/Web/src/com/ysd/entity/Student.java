@@ -1,0 +1,43 @@
+package com.ysd.entity;
+import java.util.String;
+public class Student {
+private Integer sId;
+private String sName;
+private Integer sAge;
+private Integer sSex;
+private String sPhone;
+private String sStuState;
+private String sState;
+private String sMsgSource;
+private String sSourceUrl;
+private String sSourceKeyWord;
+private String sAddress;
+private String sNetPusherId;
+private String sStuConcern;
+private Integer sQQ;
+private String sWeiXin;
+private String sContent;
+private String sCreateTime;
+private String sLearnForward;
+private Integer sIsValid;
+private String sRecord;
+private Integer sIsReturnVist;
+private String sFirstVisitTime;
+private Integer sIsHome;
+private Integer sHomeTime;
+private String sLostValid;
+private String sIsPay;
+private String sPayTime;
+private double sMoney;
+private Integer sIsReturnMoney;
+private String sReturnMoneyReason;
+private Integer sIsInClass;
+private String sInClassTime;
+private String sInClassContent;
+private Integer sIsBaoBei;
+private Integer sZiXunId;
+private Integer sCreateUserId;
+private double sPreMoney;
+private String sPreMoneyTime;
+
+}
