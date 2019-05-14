@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.ysd.dao.NefollowsDaoMapper">
+	<select id="selectStudentCount" resultType="int" parameterType="fenye">
+	  SELECT COUNT(sId) FROM student 
+	  <where>
+	  	<if test="sName != null and sName!=''">
+	  		and sName like "%" #{sName}"%"
+	  	</if>
+	  	<if test="sPhone !=null and sPhone!=''">
+	  		and sPhone =#{sPhone}
+	  	</if>
+	  	<if test="sZiXunId!=null and sZiXunId!=''" >
+	  		and sZiXunId =#{sZiXunId}
+	  	</if>
+	  	<if test="sIsPay!=null and sIsPay!=''">
+	  		and sIsPay =#{sIsPay}
+	  	</if>
+	  	<if test="sIsValid!=null and sIsValid!=''">
+	  		and sIsValid =#{sIsValid}
+	  	</if>
+	  	<if test="sIsReturnVist!=null and sIsReturnVist!=''">
+	  		and sIsReturnVist =#{sIsReturnVist}
+	  	</if>
+	  	<if test="sQQ!=null and sQQ!=''">
+	  		and sQQ =#{sQQ}
+	  	</if>
+	  	<if test="sCreateTime!=null and sCreateTime!=''">
+	  		and sCreateTime  =#{sCreateTime}
+	  	</if>
+	  </where>
+	</select>
+	
+<resultMap type="Nefollows" id="Nefollows">
+	<result column="nStudentName" property="nStudentName"/>
+	<result property="s.sId" column="sId"/>
+	<result property="s.sName" column="sName"/>
+	<result property="s.sAge" column="sAge"/>
+	<result property="s.sSex" column="sSex"/>
+	<result property="s.sPhone" column="sPhone"/>
+	<result property="s.sStuState" column="sStuState"/>
+	<result property="s.sState" column="sState"/>
+	<result property="s.sMsgSource" column="sMsgSource"/>
+	<result property="s.sSourceUrl" column="sSourceUrl"/>
+	<result property="s.sSourceKeyWord" column="sSourceKeyWord"/>
+	<result property="s.sAddress" column="sAddress"/>
+	<result property="s.sNetPusherId" column="sNetPusherId"/>
+	<result property="s.sStuConcern" column="sStuConcern"/>
+	<result property="s.sQQ" column="sQQ"/>
+	<result property="s.sWeiXin" column="sWeiXin"/>
+	<result property="s.sContent" column="sContent"/>
+	<result property="s.sCreateTime" column="sCreateTime"/>
+	<result property="s.sLearnForward" column="sLearnForward"/>
+	<result property="s.sIsValid" column="sIsValid"/>
+	<result property="s.sRecord" column="sRecord"/>
+	<result property="s.sIsReturnVist" column="sIsReturnVist"/>
+	<result property="s.sFirstVisitTime" column="sFirstVisitTime"/>
+	<result property="s.sIsHome" column="sIsHome"/>
+	<result property="s.sHomeTime" column="sHomeTime"/>
+	<result property="s.sLostValid" column="sLostValid"/>
+	<result property="s.sIsPay" column="sIsPay"/>
+	<result property="s.sPayTime" column="sPayTime"/>
+	<result property="s.sMoney" column="sMoney"/>
+	<result property="s.sIsReturnMoney" column="sIsReturnMoney"/>
+	<result property="s.sReturnMoneyReason" column="sReturnMoneyReason"/>
+	<result property="s.sIsInClass" column="sIsInClass"/>
+	<result property="s.sInClassTime" column="sInClassTime"/>
+	<result property="s.sInClassContent" column="sInClassContent"/>
+	<result property="s.sIsBaoBei" column="sIsBaoBei"/>
+	<result property="s.sZiXunId" column="sZiXunId"/>
+	<result property="s.sCreateUserId" column="sCreateUserId"/>
+	<result property="s.sPreMoney" column="sPreMoney"/>
+	<result property="s.sPreMoneyTime" column="sPreMoneyTime"/>
+</resultMap>
+	<select id="selectStudent" resultMap="Nefollows" parameterType="fenye">
+	 	SELECT n.nStudentName,s.sId,s.sName,s.sAge,s.sSex,s.sPhone,s.sStuState,s.sState,s.sMsgSource,
+        s.sSourceUrl,s.sSourceKeyWord,s.sAddress,s.sNetPusherId,s.sStuConcern,s.sQQ,s.sWeiXin,s.sContent,s.sCreateTime,s.sLearnForward,s.sIsValid,s.sRecord,s.sIsReturnVist,s.sFirstVisitTime,
+        s.sIsHome,s.sHomeTime,s.sLostValid,s.sIsPay,s.sPayTime,s.sMoney,s.sIsReturnMoney,s.sReturnMoneyReason,s.sIsInClass,s.sInClassTime,s.sInClassContent,s.sIsBaoBei,s.sZiXunId,s.sCreateUserId,
+        s.sPreMoney,s.sPreMoneyTime FROM student s,netfollows n
+        <where>
+	  	<if test="sName != null and sName!=''">
+	  		and sName like "%"#{sName}"%"
+	  	</if>
+	  	<if test="sPhone !=null and sPhone!=''">
+	  		and sPhone = #{sPhone}
+	  	</if>
+	  	 <if test="sZiXunId!=null and sZiXunId!=''" >
+	  		and sZiXunId = #{sZiXunId}
+	  	</if>
+	  	<if test="sIsPay!=null and sIsPay!=''">
+	  		and sIsPay = #{sIsPay}
+	  	</if>
+	  	
+	  	<if test="sIsValid!=null and sIsValid!=''">
+	  		and sIsValid = #{sIsValid}
+	  	</if>
+	  	<if test="sIsReturnVist!=null and sIsReturnVist!=''">
+	  		and sIsReturnVist = #{sIsReturnVist}
+	  	</if>
+	  	<if test="sQQ!=null and sQQ!=''">
+	  		and sQQ = #{sQQ}
+	  	</if>
+	  	<if test="sCreateTime!=null and sCreateTime!=''">
+	  		and sCreateTime = #{sCreateTime}
+	  	</if>
+	  	    and n.nId = s.sCreateUserId
+	  </where>
+	  limit #{page},#{pageSize}
+	</select> 
+	
+	<!-- <select id="getStudent" resultType="student">
+		SELECT *  from student
+	</select> -->
+</mapper>
