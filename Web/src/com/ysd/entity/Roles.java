@@ -1,5 +1,8 @@
 package com.ysd.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Roles {
 private Integer rId;
 private String rName;

@@ -3,20 +3,51 @@ package com.ysd.dao;
 import java.util.List;
 
 import com.ysd.entity.Fenye;
+import com.ysd.entity.Roles;
+import com.ysd.entity.Student;
 import com.ysd.entity.User;
+import com.ysd.entity.Userroles;
 
 public interface UserMapper {
+	
 	/**
-	 * 根据名称查询用户是否存在(登陆)
-	 * 
+	 * 登录
 	 * @param u
 	 * @return
 	 */
+	
+	//根据名称查询用户是否存在(登陆)
 	List<User> selectUserByname(User u);
+	//更新用户登陆信息
+	Integer updateUserLoginInfo(User u);
+	
 	/**
-	 * 更新用户登陆信息
-	 * @param u
+	 * 对用户进行操作
+	 * @param fenye
 	 * @return
 	 */
-	Integer updateUserLoginInfo(User u);
+	
+	//查询所有用户
+	Integer selectUserCount(Fenye fenye);
+	//分页多条件查询
+	List<User> selectUser(Fenye fenye);
+	//添加用户
+	Integer insertUser(User user);
+	//删除用户
+	Integer deleteUser(Integer uId);
+	//修改
+	Integer updateUser(User user);
+	
+	/**
+	 * 进行用户角色设置
+	 * @return
+	 */
+	//显示所有角色
+	List<Roles> selectRoles(); 
+	//显示所有用户角色
+	List<Roles> selectUserRoles(Integer id);
+	//给用户添加角色
+	Integer insertUserRoles(Userroles userroles);
+	//删除用户角色
+	Integer deleteUserRoles(Integer roleId);
 }

@@ -3,20 +3,25 @@ package com.ysd.dao;
 import java.util.List;
 
 import com.ysd.entity.Modules;
+import com.ysd.entity.Roles;
 
 public interface ModulesMapper {
 	
 	/**
-	 * 根据角色id查出所管理的模块
-	 * @param list
+	 * 通过用户Id搜索用户下的所有父模块
+	 * @param uid
 	 * @return
 	 */
-	List<Modules> selectModules(List<Integer> list);
+	public List<Modules> getModule(Integer uid);
 	/**
-	 * 根据父类查子类模块
-	 * @param parentId
+	 * 通过模块父Id找到该模块的所有子模块(用户原理)
+	 * @param mId
 	 * @return
 	 */
-	List<Modules> selectModulesByParentId(Integer parentId);
-
+	public List<Modules> getModeuleChlidren(Integer mId);
+	
+	
+	
+	//显示所有模块
+	List<Modules> selectModules(); 
 }
