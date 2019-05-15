@@ -4,18 +4,17 @@ import java.util.List;
 
 import com.ysd.entity.Fenye;
 import com.ysd.entity.Nefollows;
-import com.ysd.entity.Student;
 
-public interface NefollowsDaoMapper {
+public interface NefollowsMapper {
 //查询网络咨询师总条数
-Integer	selectStudentCount(Fenye fenye);
+Integer	selectNetfollowsCount(Fenye fenye);
 
 	/**
 	 * 查询网络咨询师信息
 	 * @param fenye
 	 * @return
 	 */
-List<Student>selectStudent(Fenye fenye);
+List<Nefollows> selectNetfollows(Fenye fenye);
 
 
 /*Integer insertStudent(Student student);	

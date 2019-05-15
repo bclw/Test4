@@ -19,9 +19,45 @@ public class Fenye<T> {
 	private Integer sQQ;
 	private String sCreateTime;
 	
+	private String nStudentName;
+	private String nFollowType;
+	private String nFollowTime;
+	private String nNextFollowTime;
+	private String nContent;
 	
 	
 	
+	
+	public String getnStudentName() {
+		return nStudentName;
+	}
+	public void setnStudentName(String nStudentName) {
+		this.nStudentName = nStudentName;
+	}
+	public String getnFollowType() {
+		return nFollowType;
+	}
+	public void setnFollowType(String nFollowType) {
+		this.nFollowType = nFollowType;
+	}
+	public String getnFollowTime() {
+		return nFollowTime;
+	}
+	public void setnFollowTime(String nFollowTime) {
+		this.nFollowTime = nFollowTime;
+	}
+	public String getnNextFollowTime() {
+		return nNextFollowTime;
+	}
+	public void setnNextFollowTime(String nNextFollowTime) {
+		this.nNextFollowTime = nNextFollowTime;
+	}
+	public String getnContent() {
+		return nContent;
+	}
+	public void setnContent(String nContent) {
+		this.nContent = nContent;
+	}
 	public String getsName() {
 		return sName;
 	}
@@ -108,7 +144,10 @@ public class Fenye<T> {
 				+ sPhone + ", sZiXunId=" + sZiXunId + ", sIsPay=" + sIsPay
 				+ ", sIsValid=" + sIsValid + ", sIsReturnVist=" + sIsReturnVist
 				+ ", sQQ=" + sQQ + ", sCreateTime=" + sCreateTime
-				+ ", student=" + student + "]";
+				+ ", nStudentName=" + nStudentName + ", nFollowType="
+				+ nFollowType + ", nFollowTime=" + nFollowTime
+				+ ", nNextFollowTime=" + nNextFollowTime + ", nContent="
+				+ nContent + ", student=" + student + "]";
 	}
 	
 }

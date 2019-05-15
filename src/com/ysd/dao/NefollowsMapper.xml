@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.ysd.dao.NefollowsMapper">
+	<select id="selectNetfollowsCount" resultType="int" parameterType="fenye">
+	 SELECT COUNT(nId) FROM netfollows
+	  <where>
+	  	<if test="nStudentName != null and nStudentName!=''">
+	  		and nStudentName like "%" #{nStudentName}"%"
+	  	</if>
+	  	<if test="nFollowType !=null and nFollowType!=''">
+	  		and nFollowType =#{nFollowType}
+	  	</if>
+	  	<if test="nFollowTime!=null and nFollowTime!=''" >
+	  		and nFollowTime =#{nFollowTime}
+	  	</if>
+	  	<if test="nNextFollowTime!=null and sIsPaynNextFollowTime!=''">
+	  		and nNextFollowTime =#{nNextFollowTime}
+	  	</if>
+	  	<if test="nContent!=null and nContent!=''">
+	  		and nContent =#{nContent}
+	  	</if>
+	  </where>
+	</select>
+
+	<select id="selectNetfollows" resultType="fenye" parameterType="fenye">
+		SELECT * FROM netfollows
+        <where>
+	  	<!-- <if test="sName != null and sName!=''">
+	  		and sName like "%"#{sName}"%"
+	  	</if>
+	  	<if test="sPhone !=null and sPhone!=''">
+	  		and sPhone = #{sPhone}
+	  	</if>
+	  	 <if test="sZiXunId!=null and sZiXunId!=''" >
+	  		and sZiXunId = #{sZiXunId}
+	  	</if>
+	  	<if test="sIsPay!=null and sIsPay!=''">
+	  		and sIsPay = #{sIsPay}
+	  	</if>
+	  	
+	  	<if test="sIsValid!=null and sIsValid!=''">
+	  		and sIsValid = #{sIsValid}
+	  	</if>
+	  	<if test="sIsReturnVist!=null and sIsReturnVist!=''">
+	  		and sIsReturnVist = #{sIsReturnVist}
+	  	</if>
+	  	<if test="sQQ!=null and sQQ!=''">
+	  		and sQQ = #{sQQ}
+	  	</if>
+	  	<if test="sCreateTime!=null and sCreateTime!=''">
+	  		and sCreateTime = #{sCreateTime}
+	  	</if>
+	  	    and n.nId = s.sCreateUserId -->
+	  	<if test="nStudentName != null and nStudentName!=''">
+	  		and nStudentName like "%" #{nStudentName}"%"
+	  	</if>
+	  	<if test="nFollowType !=null and nFollowType!=''">
+	  		and nFollowType =#{nFollowType}
+	  	</if>
+	  	<if test="nFollowTime!=null and nFollowTime!=''" >
+	  		and nFollowTime =#{nFollowTime}
+	  	</if>
+	  	<if test="nNextFollowTime!=null and sIsPaynNextFollowTime!=''">
+	  		and nNextFollowTime =#{nNextFollowTime}
+	  	</if>
+	  	<if test="nContent!=null and nContent!=''">
+	  		and nContent =#{nContent}
+	  	</if>  
+	  </where>
+	  limit #{page},#{pageSize}
+	</select> 
+	
+	<!-- <select id="getStudent" resultType="student">
+		SELECT *  from student
+	</select> -->
+</mapper>
